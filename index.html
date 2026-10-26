@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZafirGames | Gaming Hub</title>
+
+<style>
+:root {
+  --bg: #090711;
+  --panel: #151020;
+  --purple: #a855f7;
+  --pink: #e879f9;
+  --text: #f8f5ff;
+  --muted: #b9b1c9;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  background: #100b1b;
+  border-bottom: 1px solid #35204b;
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.logo { font-size: 25px; font-weight: 900; }
+.logo span { color: var(--purple); }
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 16px;
+}
+.hero {
+  padding: 65px 6%;
+  background: linear-gradient(120deg, #24103e, #090711 75%);
+}
+.hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 0 0 14px; }
+.hero h1 span { color: var(--pink); }
+.hero p { color: var(--muted); line-height: 1.7; }
+main { padding: 35px 6%; }
+.toolbar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+input, select {
+  background: var(--panel);
+  color: white;
+  border: 1px solid #49305e;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+}
+input { flex: 1; min-width: 180px; }
+select { min-width: 145px; }
+input:focus, select:focus {
+  outline: 2px solid var(--purple);
+}
+.filters {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 18px 0 28px;
+}
+.filter {
+  border: 1px solid #49305e;
+  border-radius: 20px;
+  padding: 10px 16px;
+  background: #171020;
+  color: white;
+  cursor: pointer;
+}
+.filter.active, .filter:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  gap: 22px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid #2c203b;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--purple);
+}
+.banner {
+  width: 100%;
+  aspect-ratio: 460 / 215;
+  object-fit: cover;
+  display: block;
+  background: #261438;
+}
+.card-content { padding: 16px; }
+.card h3 { margin: 0 0 10px; }
+.tag {
+  display: inline-block;
+  background: #352047;
+  color: #e7c6ff;
+  padding: 5px 9px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+.card p {
+  color: var(--muted);
+  line-height: 1.55;
+  min-height: 65px;
+}
+button, .official-link {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 14px;
+  background: var(--purple);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .official-link:hover { background: #9333ea; }
+.empty { color: var(--muted); padding: 25px 0; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px 15px;
+  border-top: 1px solid #30213f;
+  margin-top: 40px;
+}
+dialog {
+  width: min(92%, 550px);
+  background: var(--panel);
+  color: white;
+  border: 1px solid var(--purple);
+  border-radius: 16px;
+  padding: 24px;
+}
+dialog::backdrop { background: #000b; }
+dialog p { color: var(--muted); line-height: 1.7; }
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.close { background: #382744; }
+@media (max-width: 600px) {
+  header { padding: 16px 5%; }
+  nav a { margin-left: 8px; font-size: 14px; }
+  main { padding: 25px 5%; }
+  .hero { padding: 45px 5%; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">Zafir<span>Games</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>ENTER THE <span>GAMEVERSE</span></h1>
+  <p>Discover games, explore genres and visit official game websites.</p>
+  <a class="official-link" href="#games">Explore Games</a>
+</section>
+
+<main id="games">
+  <h2>Explore Games</h2>
+  <p style="color:var(--muted)">Search by title or choose a genre to filter the collection.</p>
+
+  <div class="toolbar">
+    <input id="search" type="search"
+      placeholder="Search games... e.g. Naruto"
+      aria-label="Search games">
+    <select id="year" aria-label="Filter by release year">
+      <option value="all">All years</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-genre="All">All Games</button>
+    <button class="filter" data-genre="Action">Action</button>
+    <button class="filter" data-genre="RPG">RPG</button>
+    <button class="filter" data-genre="Sports">Sports</button>
+    <button class="filter" data-genre="Racing">Racing</button>
+    <button class="filter" data-genre="Sandbox">Sandbox</button>
+    <button class="filter" data-genre="Horror">Horror</button>
+  </div>
+
+  <p id="count" aria-live="polite"></p>
+  <div class="grid" id="gameGrid"></div>
+  <p class="empty" id="empty" hidden>No games found. Try another search or filter.</p>
+</main>
+
+<section id="about" style="padding:25px 6%">
+  <h2>About ZafirGames</h2>
+  <p style="color:var(--muted);line-height:1.7">
+    Welcome to ZafirGames! Explore game descriptions, discover genres
+    and visit official game websites. More features coming soon.
+  </p>
+</section>
+
+<footer>© 2026 ZafirGames · Made for gamers 💜</footer>
+
+<dialog id="details">
+  <h2 id="modalTitle"></h2>
+  <p id="modalGenre"></p>
+  <p id="modalDescription"></p>
+  <div class="modal-actions">
+    <a id="officialLink" class="official-link"
+       href="#" target="_blank" rel="noopener noreferrer">
+       Official Game Website ↗
+    </a>
+    <button class="close" id="closeModal">Close</button>
+  </div>
+</dialog>
+
+<script>
+const games = [
+  {
+    title: "Naruto Shippuden: Ultimate Ninja Storm 4",
+    year: 2016, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/349040/header.jpg",
+    url: "https://en.bandainamcoent.eu/naruto/naruto-shippuden-ultimate-ninja-storm-4",
+    description: "Fight as famous Naruto characters in fast-paced ninja battles, powerful ultimate jutsu attacks and dramatic story moments."
+  },
+  {
+    title: "Minecraft",
+    year: 2011, genre: "Sandbox",
+    image: "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
+    url: "https://www.minecraft.net/",
+    description: "Explore a block-based world, build your own creations, gather resources and survive in different environments."
+  },
+  {
+    title: "EA SPORTS FC 26",
+    year: 2025, genre: "Sports",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/header.jpg",
+    url: "https://www.ea.com/games/ea-sports-fc",
+    description: "Play football, build your team and compete in different game modes featuring clubs and players from around the world."
+  },
+  {
+    title: "Genshin Impact",
+    year: 2020, genre: "RPG",
+    image: "https://upload.wikimedia.org/wikipedia/en/5/5d/Genshin_Impact_cover.jpg",
+    url: "https://genshin.hoyoverse.com/",
+    description: "Explore the fantasy world of Teyvat, discover its regions and characters, and use elemental abilities in combat."
+  },
+  {
+    title: "Cyberpunk 2077",
+    year: 2020, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg",
+    url: "https://www.cyberpunk.net/",
+    description: "Explore Night City in a futuristic open-world role-playing adventure full of missions, choices and technology."
+  },
+  {
+    title: "Forza Horizon 5",
+    year: 2021, genre: "Racing",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg",
+    url: "https://forza.net/",
+    description: "Race across a colourful open-world version of Mexico with a huge collection of cars and different events."
+  },
+  {
+    title: "Resident Evil Village",
+    year: 2021, genre: "Horror",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1196590/header.jpg",
+    url: "https://www.residentevil.com/village/",
+    description: "A survival-horror adventure with exploration, puzzles and dangerous encounters in a mysterious village."
+  },
+  {
+    title: "Elden Ring",
+    year: 2022, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg",
+    url: "https://en.bandainamcoent.eu/elden-ring/elden-ring",
+    description: "Explore a vast fantasy world, discover hidden locations and face challenging enemies in an action RPG."
+  },
+  {
+    title: "God of War Ragnarök",
+    year: 2022, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg",
+    url: "https://www.playstation.com/games/god-of-war-ragnarok/",
+    description: "Join Kratos and Atreus on a Norse-mythology adventure featuring exploration, combat and an emotional story."
+  },
+  {
+    title: "Hogwarts Legacy",
+    year: 2023, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/header.jpg",
+    url: "https://www.hogwartslegacy.com/",
+    description: "Attend Hogwarts in a magical open-world adventure with spellcasting, exploration and quests."
+  },
+  {
+    title: "Marvel's Spider-Man 2",
+    year: 2025, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2651280/header.jpg",
+    url: "https://www.playstation.com/games/marvels-spider-man-2/",
+    description: "Swing through New York as Peter Parker and Miles Morales in a superhero action adventure."
+  },
+  {
+    title: "Black Myth: Wukong",
+    year: 2024, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg",
+    url: "https://www.heishenhua.com/",
+    description: "Play as the Destined One in an action RPG inspired by the classic Chinese tale Journey to the West."
+  },
+  {
+    title: "Palworld",
+    year: 2024, genre: "Sandbox",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1623730/header.jpg",
+    url: "https://www.pocketpair.jp/palworld",
+    description: "Explore an open world, collect mysterious creatures, build bases and craft items as you adventure."
+  },
+  {
+    title: "Monster Hunter Wilds",
+    year: 2025, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2246340/header.jpg",
+    url: "https://www.monsterhunter.com/wilds/",
+    description: "Track powerful monsters, prepare equipment and work through hunts in a changing natural environment."
+  },
+  {
+    title: "Clair Obscur: Expedition 33",
+    year: 2025, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/header.jpg",
+    url: "https://www.expedition33.com/",
+    description: "An atmospheric fantasy RPG combining turn-based battles with real-time actions and a story-driven journey."
+  }
+];
+
+const grid = document.getElementById("gameGrid");
+const search = document.getElementById("search");
+const year = document.getElementById("year");
+const empty = document.getElementById("empty");
+const count = document.getElementById("count");
+const dialog = document.getElementById("details");
+let selectedGenre = "All";
+
+function renderGames() {
+  const query = search.value.trim().toLowerCase();
+  const selectedYear = year.value;
+
+  const filtered = games.filter(game => {
+    const matchesSearch =
+      game.title.toLowerCase().includes(query) ||
+      game.genre.toLowerCase().includes(query) ||
+      String(game.year).includes(query);
+
+    const matchesGenre =
+      selectedGenre === "All" || game.genre === selectedGenre;
+
+    const matchesYear =
+      selectedYear === "all" || String(game.year) === selectedYear;
+
+    return matchesSearch && matchesGenre && matchesYear;
+  });
+
+  grid.innerHTML = "";
+
+  filtered.forEach(game => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.className = "banner";
+    img.src = game.image;
+    img.alt = game.title + " game artwork";
+    img.loading = "lazy";
+    img.onerror = () => {
+      img.onerror = null;
+      img.alt = game.title + " artwork unavailable";
+      img.style.display = "none";
+    };
+
+    const content = document.createElement("div");
+    content.className = "card-content";
+
+    const heading = document.createElement("h3");
+    heading.textContent = game.title;
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = game.genre + " · " + game.year;
+
+    const description = document.createElement("p");
+    description.textContent = game.description;
+
+    const button = document.createElement("button");
+    button.textContent = "More Details";
+    button.addEventListener("click", () => showDetails(game));
+
+    content.append(heading, tag, description, button);
+    card.append(img, content);
+    grid.appendChild(card);
+  });
+
+  count.textContent = `Showing ${filtered.length} of ${games.length} games`;
+  empty.hidden = filtered.length !== 0;
+}
+
+function showDetails(game) {
+  document.getElementById("modalTitle").textContent = game.title;
+  document.getElementById("modalGenre").textContent =
+    `${game.genre} · Released ${game.year}`;
+  document.getElementById("modalDescription").textContent = game.description;
+
+  const link = document.getElementById("officialLink");
+  link.href = game.url;
+
+  dialog.showModal();
+}
+
+search.addEventListener("input", renderGames);
+year.addEventListener("change", renderGames);
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedGenre = button.dataset.genre;
+
+    document.querySelectorAll(".filter").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderGames();
+  });
+});
+
+document.getElementById("closeModal").addEventListener("click", () => {
+  dialog.close();
+});
+
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) dialog.close();
+});
+
+renderGames();
+</script>
+</body>
+    </html>
+    
