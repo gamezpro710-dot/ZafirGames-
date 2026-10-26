@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZafirGames | Ultimate Gaming Hub</title>
+
+<style>
+:root {
+  --bg: #090711;
+  --panel: #151020;
+  --purple: #a855f7;
+  --pink: #e879f9;
+  --text: #f8f5ff;
+  --muted: #b9b1c9;
+  --border: #35204b;
+  --header: #100b1b;
+  --hero-end: #090711;
+  --chip: #171020;
+  --tag-bg: #352047;
+  --tag-text: #e7c6ff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.logo { font-size: 25px; font-weight: 900; }
+.logo span { color: var(--purple); }
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin-left: 16px;
+}
+.hero {
+  padding: 65px 6%;
+  background: linear-gradient(120deg, #321052, var(--hero-end) 75%);
+}
+.hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 0 0 14px; }
+.hero h1 span { color: var(--pink); }
+.hero p { color: var(--muted); line-height: 1.7; }
+main { padding: 35px 6%; }
+.toolbar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+input, select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+}
+input { flex: 1; min-width: 180px; }
+select { min-width: 145px; }
+input:focus, select:focus {
+  outline: 2px solid var(--purple);
+}
+.filters {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 18px 0 28px;
+}
+.filter {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 10px 16px;
+  background: var(--chip);
+  color: var(--text);
+  cursor: pointer;
+}
+.filter.active, .filter:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  gap: 22px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--purple);
+}
+.banner {
+  width: 100%;
+  aspect-ratio: 460 / 215;
+  object-fit: cover;
+  display: block;
+  background: #261438;
+}
+.card-content { padding: 16px; }
+.card h3 { margin: 0 0 10px; }
+.tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 5px 9px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+.card p {
+  color: var(--muted);
+  line-height: 1.55;
+  min-height: 65px;
+}
+button, .official-link {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 14px;
+  background: var(--purple);
+  color: var(--text);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .official-link:hover { background: #9333ea; }
+.empty { color: var(--muted); padding: 25px 0; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px 15px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+dialog {
+  width: min(92%, 550px);
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--purple);
+  border-radius: 16px;
+  padding: 24px;
+}
+dialog::backdrop { background: #000b; }
+dialog p { color: var(--muted); line-height: 1.7; }
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.close { background: #382744; }
+@media (max-width: 600px) {
+  header { padding: 16px 5%; }
+  nav a { margin-left: 8px; font-size: 14px; }
+  main { padding: 25px 5%; }
+  .hero { padding: 45px 5%; }
+}
+
+/* Advanced theme system */
+body { transition: background .25s, color .25s; }
+body.light {
+  --bg:#f8f5ff; --panel:#ffffff; --purple:#7928ca; --pink:#9b42dc;
+  --text:#241238; --muted:#62556f; --border:#e4d5f1;
+  --header:#ffffff; --hero-end:#f8f5ff; --chip:#f0e6fa;
+  --tag-bg:#efe1ff; --tag-text:#63249a;
+}
+header { position:sticky;top:0;z-index:20;backdrop-filter:blur(16px); }
+.theme-switch { display:flex;gap:9px;align-items:center; }
+.theme-dot { width:40px;height:40px;padding:0;border-radius:50%;border:2px solid #a855f7;display:grid;place-items:center;font-size:21px;transition:transform .2s,box-shadow .2s; }
+.theme-dot:hover { transform:scale(1.1); }
+.dark-dot { background:#100b1b;color:#fff; }
+.light-dot { background:#fff;color:#7928ca; }
+.theme-dot.chosen { box-shadow:0 0 0 3px #a855f766; }
+body.light .hero { background:linear-gradient(120deg,#e8d3ff,var(--hero-end) 80%); }
+body.light .filter.active,body.light .filter:hover { color:white; }
+body.light .official-link,body.light .card button:not(.heart),body.light .secondary-btn.active { color:white; }
+body.light dialog { color:var(--text); }
+body.light .close { background:#e7d9f4;color:#38134f; }
+.card { position:relative;box-shadow:0 8px 25px #00000012; }
+.card:hover { box-shadow:0 14px 36px #a855f72a; }
+.card h3 { line-height:1.35; }
+.heart { position:absolute;right:10px;top:10px;width:38px;height:38px;padding:0;border-radius:50%;background:#100b1bcc;color:white;font-size:24px;z-index:1; }
+.heart.saved { background:#a855f7;color:white; }
+.secondary-btn { background:var(--chip);color:var(--text);border:1px solid var(--border); }
+.secondary-btn.active { background:var(--purple);color:white; }
+.mini-accent { color:var(--purple); }
+nav a:hover { color:var(--purple); }
+.banner-fallback { aspect-ratio:460/215;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:linear-gradient(135deg,#40116b,#160b27);color:#fff;font-weight:bold; }
+@media(max-width:600px){.theme-dot{width:36px;height:36px}header{gap:10px}.logo{font-size:21px}}
+.banner-placeholder{aspect-ratio:460/215;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;background:linear-gradient(135deg,#261438,#63338d);color:#fff;font-weight:800}
+/* Enhanced motion and responsive effects */
+@keyframes riseIn {from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glowPulse {0%,100%{opacity:.35;transform:translate(0,0)}50%{opacity:.6;transform:translate(25px,-18px)}}
+.hero {position:relative;overflow:hidden;isolation:isolate}
+.hero::before {content:"";position:absolute;z-index:-1;width:350px;height:350px;right:5%;top:-120px;border-radius:50%;background:radial-gradient(circle,#a855f766,transparent 70%);animation:glowPulse 8s ease-in-out infinite;pointer-events:none}
+.hero h1,.hero p {animation:riseIn .7s both}
+.hero p{animation-delay:.12s}
+.card {animation:riseIn .55s both;box-shadow:0 8px 24px #00000015;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{box-shadow:0 16px 36px #a855f72a}
+.banner{transition:transform .4s}
+.card:hover .banner{transform:scale(1.035)}
+.card{isolation:isolate}
+.download-link{margin:10px 0 0 8px;font-size:13px;padding:10px}
+button,a{transition:filter .2s,transform .2s}
+button:focus-visible,a:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">Zafir<span>Games</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="theme-switch" aria-label="Choose website theme"><button id="darkTheme" class="theme-dot dark-dot" title="Black and purple theme" aria-label="Switch to dark theme">☾</button><button id="lightTheme" class="theme-dot light-dot" title="White and purple theme" aria-label="Switch to light theme">☀</button></div>
+</header>
+
+<section class="hero" id="home">
+  <h1>ENTER THE <span>GAMEVERSE</span></h1>
+  <p>Discover games, explore genres and visit official game websites.</p>
+  <a class="official-link" href="#games">Explore Games</a>
+</section>
+
+<main id="games">
+  <h2>Explore Games <span class="mini-accent">✦</span></h2>
+  <p style="color:var(--muted)">Search by title or choose a genre to filter the collection.</p>
+
+  <div class="toolbar">
+    <input id="search" type="search"
+      placeholder="Search games... e.g. Naruto"
+      aria-label="Search games">
+    <select id="year" aria-label="Filter by release year">
+      <option value="all">All years</option>
+      <option value="2011">2011</option>
+      <option value="2012">2012</option>
+      <option value="2013">2013</option>
+      <option value="2014">2014</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+    <select id="sort" aria-label="Sort games"><option value="default">Featured order</option><option value="az">Name A–Z</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+    <button id="favoritesOnly" class="secondary-btn" aria-pressed="false">♡ Favorites only</button>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-genre="All">All Games</button>
+    <button class="filter" data-genre="Action">Action</button>
+    <button class="filter" data-genre="Fighting">Fighting</button>
+    <button class="filter" data-genre="RPG">RPG</button>
+    <button class="filter" data-genre="Sports">Sports</button>
+    <button class="filter" data-genre="Racing">Racing</button>
+    <button class="filter" data-genre="Sandbox">Sandbox</button>
+    <button class="filter" data-genre="Horror">Horror</button>
+  </div>
+
+  <p id="count" aria-live="polite"></p>
+  <div class="grid" id="gameGrid"></div>
+  <p class="empty" id="empty" hidden>No games found. Try another search or filter.</p>
+</main>
+
+<section id="about" style="padding:25px 6%">
+  <h2>About ZafirGames</h2>
+  <p style="color:var(--muted);line-height:1.7">
+    Welcome to ZafirGames! Explore game descriptions, discover genres
+    and visit official game websites. More features coming soon.
+  </p>
+</section>
+
+<footer>© 2026 ZafirGames · Made for gamers 💜</footer>
+
+<dialog id="details">
+  <h2 id="modalTitle"></h2>
+  <p id="modalGenre"></p>
+  <p id="modalDescription"></p>
+  <div class="modal-actions">
+    <a id="officialLink" class="official-link"
+       href="#" target="_blank" rel="noopener noreferrer">
+       Get Game · Official Page ↗
+    </a>
+    <button class="close" id="closeModal">Close</button>
+  </div>
+</dialog>
+
+<script>
+const games = [
+  {
+    title: "Naruto Shippuden: Ultimate Ninja Storm 4",
+    year: 2016, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/349040/header.jpg",
+    url: "https://store.steampowered.com/app/349040/",
+    description: "Fight as famous Naruto characters in fast-paced ninja battles, powerful ultimate jutsu attacks and dramatic story moments."
+  },
+  {
+    title: "Minecraft",
+    year: 2011, genre: "Sandbox",
+    image: "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
+    url: "https://www.minecraft.net/",
+    description: "Explore a block-based world, build your own creations, gather resources and survive in different environments."
+  },
+  {
+    title: "EA SPORTS FC 26",
+    year: 2025, genre: "Sports",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/header.jpg",
+    url: "https://store.steampowered.com/app/3405690/",
+    description: "Play football, build your team and compete in different game modes featuring clubs and players from around the world."
+  },
+  {
+    title: "Genshin Impact",
+    year: 2020, genre: "RPG",
+    image: "https://upload.wikimedia.org/wikipedia/en/5/5d/Genshin_Impact_cover.jpg",
+    url: "https://genshin.hoyoverse.com/",
+    description: "Explore the fantasy world of Teyvat, discover its regions and characters, and use elemental abilities in combat."
+  },
+  {
+    title: "Cyberpunk 2077",
+    year: 2020, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg",
+    url: "https://store.steampowered.com/app/1091500/",
+    description: "Explore Night City in a futuristic open-world role-playing adventure full of missions, choices and technology."
+  },
+  {
+    title: "Forza Horizon 5",
+    year: 2021, genre: "Racing",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg",
+    url: "https://store.steampowered.com/app/1551360/",
+    description: "Race across a colourful open-world version of Mexico with a huge collection of cars and different events."
+  },
+  {
+    title: "Resident Evil Village",
+    year: 2021, genre: "Horror",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1196590/header.jpg",
+    url: "https://store.steampowered.com/app/1196590/",
+    description: "A survival-horror adventure with exploration, puzzles and dangerous encounters in a mysterious village."
+  },
+  {
+    title: "Elden Ring",
+    year: 2022, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg",
+    url: "https://store.steampowered.com/app/1245620/",
+    description: "Explore a vast fantasy world, discover hidden locations and face challenging enemies in an action RPG."
+  },
+  {
+    title: "God of War Ragnarök",
+    year: 2022, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg",
+    url: "https://store.steampowered.com/app/2322010/",
+    description: "Join Kratos and Atreus on a Norse-mythology adventure featuring exploration, combat and an emotional story."
+  },
+  {
+    title: "Hogwarts Legacy",
+    year: 2023, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/header.jpg",
+    url: "https://store.steampowered.com/app/990080/",
+    description: "Attend Hogwarts in a magical open-world adventure with spellcasting, exploration and quests."
+  },
+  {
+    title: "Marvel's Spider-Man 2",
+    year: 2025, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2651280/header.jpg",
+    url: "https://store.steampowered.com/app/2651280/",
+    description: "Swing through New York as Peter Parker and Miles Morales in a superhero action adventure."
+  },
+  {
+    title: "Black Myth: Wukong",
+    year: 2024, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg",
+    url: "https://store.steampowered.com/app/2358720/",
+    description: "Play as the Destined One in an action RPG inspired by the classic Chinese tale Journey to the West."
+  },
+  {
+    title: "Palworld",
+    year: 2024, genre: "Sandbox",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1623730/header.jpg",
+    url: "https://store.steampowered.com/app/1623730/",
+    description: "Explore an open world, collect mysterious creatures, build bases and craft items as you adventure."
+  },
+  {
+    title: "Monster Hunter Wilds",
+    year: 2025, genre: "Action",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2246340/header.jpg",
+    url: "https://store.steampowered.com/app/2246340/",
+    description: "Track powerful monsters, prepare equipment and work through hunts in a changing natural environment."
+  },
+  {
+    title: "Clair Obscur: Expedition 33",
+    year: 2025, genre: "RPG",
+    image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/header.jpg",
+    url: "https://store.steampowered.com/app/1903340/",
+    description: "An atmospheric fantasy RPG combining turn-based battles with real-time actions and a story-driven journey."
+  },
+  {"title": "Naruto Shippuden: Ultimate Ninja Storm Revolution", "year": 2014, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/272510/header.jpg", "url": "https://store.steampowered.com/app/272510/", "description": "Battle with a huge Naruto roster and discover special ninja team techniques."},
+  {"title": "Naruto x Boruto: Ultimate Ninja Storm Connections", "year": 2023, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1020790/header.jpg", "url": "https://store.steampowered.com/app/1020790/", "description": "Experience Naruto and Sasuke’s stories with fast-paced ninja battles."},
+  {"title": "Naruto Shippuden: Ultimate Ninja Storm 4 Road to Boruto", "year": 2017, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/495160/header.jpg", "url": "https://store.steampowered.com/app/495160/", "description": "Continue the Storm 4 adventure with Boruto-era story content."},
+  {"title": "Naruto: Ultimate Ninja Storm", "year": 2008, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/495140/header.jpg", "url": "https://store.steampowered.com/app/495140/", "description": "Relive early Naruto adventures in cinematic arena battles."},
+  {"title": "Naruto Shippuden: Ultimate Ninja Storm 2", "year": 2010, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/543870/header.jpg", "url": "https://store.steampowered.com/app/543870/", "description": "Follow Naruto Shippuden story arcs with spectacular boss fights."},
+  {"title": "Naruto Shippuden: Ultimate Ninja Storm 3 Full Burst", "year": 2013, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/234670/header.jpg", "url": "https://store.steampowered.com/app/234670/", "description": "Take part in major ninja war battles and dramatic story missions."},
+  {"title": "Naruto to Boruto: Shinobi Striker", "year": 2018, "genre": "Action", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/633230/header.jpg", "url": "https://store.steampowered.com/app/633230/", "description": "Create a shinobi and compete in team-based ninja action."},
+  {"title": "Dragon Ball FighterZ", "year": 2018, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/678950/header.jpg", "url": "https://store.steampowered.com/app/678950/", "description": "Fast and flashy 3-on-3 Dragon Ball fighting action."},
+  {"title": "Dragon Ball Xenoverse 2", "year": 2016, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/454650/header.jpg", "url": "https://store.steampowered.com/app/454650/", "description": "Build a custom fighter and protect Dragon Ball history."},
+  {"title": "Dragon Ball: Sparking! ZERO", "year": 2024, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1790600/header.jpg", "url": "https://store.steampowered.com/app/1790600/", "description": "Battle with a massive roster in explosive 3D arenas."},
+  {"title": "One Piece: Pirate Warriors 4", "year": 2020, "genre": "Action", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1089090/header.jpg", "url": "https://store.steampowered.com/app/1089090/", "description": "Fight through waves of enemies alongside the Straw Hat Pirates."},
+  {"title": "Demon Slayer: The Hinokami Chronicles", "year": 2021, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1490890/header.jpg", "url": "https://store.steampowered.com/app/1490890/", "description": "Experience Demon Slayer’s story and anime-inspired arena combat."},
+  {"title": "Jump Force", "year": 2019, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/816020/header.jpg", "url": "https://en.bandainamcoent.eu/jump-force/news/jump-force-end-of-sales-and-online-service", "description": "Iconic manga heroes meet in crossover arena battles."},
+  {"title": "Tekken 8", "year": 2024, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1778820/header.jpg", "url": "https://store.steampowered.com/app/1778820/", "description": "Challenge fighters around the world in a modern 3D fighting game."},
+  {"title": "My Hero One’s Justice 2", "year": 2020, "genre": "Fighting", "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1058450/header.jpg", "url": "https://store.steampowered.com/app/1058450/", "description": "Use powerful quirks in superhero-inspired arena battles."}
+];
+
+const grid = document.getElementById("gameGrid");
+const retiredTitles = new Set(["Jump Force"]);
+const search = document.getElementById("search");
+const year = document.getElementById("year");
+const empty = document.getElementById("empty");
+const count = document.getElementById("count");
+const dialog = document.getElementById("details");
+let selectedGenre = "All";
+let favoritesOnly = false;
+let favorites = new Set();
+try { favorites = new Set(JSON.parse(localStorage.getItem("zafirFavorites") || "[]")); } catch(e) {}
+const sort = document.getElementById("sort");
+function saveFavorites(){try{localStorage.setItem("zafirFavorites",JSON.stringify([...favorites]));}catch(e){}}
+function setTheme(theme){
+ document.body.classList.toggle("light",theme==="light");
+ document.getElementById("darkTheme").classList.toggle("chosen",theme==="dark");
+ document.getElementById("lightTheme").classList.toggle("chosen",theme==="light");
+ try{localStorage.setItem("zafirTheme",theme);}catch(e){}
+}
+document.getElementById("darkTheme").onclick=()=>setTheme("dark");
+document.getElementById("lightTheme").onclick=()=>setTheme("light");
+let savedTheme="dark";try{savedTheme=localStorage.getItem("zafirTheme")||"dark";}catch(e){}setTheme(savedTheme);
+document.getElementById("favoritesOnly").onclick=()=>{
+ favoritesOnly=!favoritesOnly;
+ const btn=document.getElementById("favoritesOnly");btn.classList.toggle("active",favoritesOnly);
+ btn.setAttribute("aria-pressed",String(favoritesOnly));renderGames();
+};
+
+function renderGames() {
+  const query = search.value.trim().toLowerCase();
+  const selectedYear = year.value;
+
+  let filtered = games.filter(game => {
+    const matchesSearch =
+      game.title.toLowerCase().includes(query) ||
+      game.genre.toLowerCase().includes(query) ||
+      String(game.year).includes(query);
+
+    const matchesGenre =
+      selectedGenre === "All" || game.genre === selectedGenre;
+
+    const matchesYear =
+      selectedYear === "all" || String(game.year) === selectedYear;
+
+    return matchesSearch && matchesGenre && matchesYear && (!favoritesOnly || favorites.has(game.title));
+  });
+
+  if(sort.value==="az")filtered.sort((a,b)=>a.title.localeCompare(b.title));
+  if(sort.value==="newest")filtered.sort((a,b)=>b.year-a.year);
+  if(sort.value==="oldest")filtered.sort((a,b)=>a.year-b.year);
+  grid.innerHTML = "";
+
+  filtered.forEach(game => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.className = "banner";
+    img.src = game.image;
+    img.alt = game.title + " game artwork";
+    img.loading = "lazy";
+    const backup = game.image.replace("shared.akamai.steamstatic.com", "cdn.akamai.steamstatic.com");
+    let triedBackup = false;
+    img.onerror = () => {
+      if (!triedBackup && backup !== game.image) {
+        triedBackup = true;
+        img.src = backup;
+        return;
+      }
+      img.onerror = null;
+      img.style.display = "none";
+      const placeholder = document.createElement("div");
+      placeholder.className = "banner-placeholder";
+      placeholder.textContent = game.title + " · Banner unavailable";
+      card.insertBefore(placeholder, card.firstChild);
+    };
+
+    const content = document.createElement("div");
+    content.className = "card-content";
+
+    const heading = document.createElement("h3");
+    heading.textContent = game.title;
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = game.genre + " · " + game.year;
+
+    const description = document.createElement("p");
+    description.textContent = game.description;
+
+    const button = document.createElement("button");
+    button.textContent = "More Details";
+    button.addEventListener("click", () => showDetails(game));
+
+    content.append(heading, tag, description, button);
+    const download = document.createElement("a");
+    download.className = "official-link download-link";
+    download.href = game.url;
+    download.target = "_blank";
+    download.rel = "noopener noreferrer";
+    download.textContent = retiredTitles.has(game.title) ? "Unavailable · Info ↗" : "Get Game ↗";
+    download.setAttribute("aria-label", "Official game page for " + game.title);
+    content.appendChild(download);
+    const heart=document.createElement("button");heart.className="heart"+(favorites.has(game.title)?" saved":"");
+    heart.textContent=favorites.has(game.title)?"♥":"♡";
+    heart.setAttribute("aria-label","Toggle favorite for "+game.title);
+    heart.onclick=()=>{if(favorites.has(game.title))favorites.delete(game.title);else favorites.add(game.title);saveFavorites();renderGames();};
+    card.append(img, heart, content);
+    grid.appendChild(card);
+  });
+
+  count.textContent = `Showing ${filtered.length} of ${games.length} games`;
+  empty.hidden = filtered.length !== 0;
+}
+
+function showDetails(game) {
+  document.getElementById("modalTitle").textContent = game.title;
+  document.getElementById("modalGenre").textContent =
+    `${game.genre} · Released ${game.year}`;
+  document.getElementById("modalDescription").textContent = game.description;
+
+  const link = document.getElementById("officialLink");
+  link.href = game.url;
+  link.textContent = retiredTitles.has(game.title) ? "No longer sold · Details ↗" : "Get Game · Official Page ↗";
+
+  dialog.showModal();
+}
+
+search.addEventListener("input", renderGames);
+year.addEventListener("change", renderGames);
+sort.addEventListener("change",renderGames);
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedGenre = button.dataset.genre;
+
+    document.querySelectorAll(".filter").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderGames();
+  });
+});
+
+document.getElementById("closeModal").addEventListener("click", () => {
+  dialog.close();
+});
+
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) dialog.close();
+});
+
+renderGames();
+</script>
+</body>
+    </html>
+    
